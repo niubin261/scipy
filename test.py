@@ -4,7 +4,7 @@ from scipy.special import jv
 from matplotlib import markers
 from matplotlib.pyplot import plot, show
 from pylab import *
-
+from sklearn import preprocessing
 def rosen(x):
     """The Rosenbrock function"""
     return sum(100.0*(x[1:]-x[:-1]**2.0)**2.0 + (1-x[:-1])**2.0)
@@ -37,4 +37,32 @@ show()
 def f(x):
     return -np.exp(-(x-0.7)**2)
 x_min=brent(f)
+x_min=fminbound(f,1,2,xtol=0.000001,maxfun=1,disp=2)
 print x_min
+
+import numpy as np
+import urllib
+# url with dataset
+from sklearn import metrics
+from sklearn.svm import SVC
+url = "http://archive.ics.uci.edu/ml/machine-learning-databases/pima-indians-diabetes/pima-indians-diabetes.data"
+# download the file
+raw_data = urllib.urlopen(url)
+# load the CSV file as a numpy matrix
+dataset = np.loadtxt(raw_data, delimiter=",")
+# separate the data from the target attributes
+X = dataset[:,0:7]
+y = dataset[:,8]
+
+# fit a SVM model to the data
+model = SVC()
+model.fit(X, y)
+print(model)
+# make predictions
+expected = y
+predicted = model.predict(X)
+# summarize the fit of the model
+print(metrics.classification_report(expected, predicted))
+print(metrics.confusion_matrix(expected, predicted))
+
+
