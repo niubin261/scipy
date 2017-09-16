@@ -2,7 +2,15 @@ import numpy as np
 from scipy import optimize, minimum
 from scipy.optimize import minimize
 
+"""
+minimize f(x) subject to
 
+g_i(x) >= 0,  i = 1,...,m
+h_j(x)  = 0,  j = 1,...,p
+"""
+"""
+bounds None means 00
+"""
 def func(x, sign=1.0):
     """ Objective function """
     return sign*(10-x[0]**2-x[1]**2)
@@ -22,7 +30,7 @@ cons = ({'type': 'eq',
         'jac' : lambda x: np.array([1.0,1.0])},#map
         {'type': 'ineq',
         'fun' : lambda x: np.array([-x[0]**2+x[1]]),
-        'jac' : lambda x: np.array([-2*x[0],1.0])})
+        'jac' : lambda x: np.array([-2*x[0],1.0])}) #inep means >=0
 #set
 
 ''' 
