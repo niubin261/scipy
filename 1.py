@@ -9,6 +9,7 @@ g_i(x) >= 0,  i = 1,...,m
 h_j(x)  = 0,  j = 1,...,p
 """
 """
+</p>
 bounds None means 00
 """
 def func(x, sign=1.0):
@@ -37,7 +38,7 @@ cons = ({'type': 'eq',
 res = minimize(func, jac=func_deriv,
     method='SLSQP', options={'disp': True})
     '''
-bonds=((-100,100),(-100,100))
+bonds=((-np.inf, np.inf), (-np.inf, np.inf))
 res = minimize(fun=func, x0=[-2.0,2.0],bounds=bonds, jac=func_deriv,constraints=cons, method='SLSQP', options={'disp': True})
 
 print res
