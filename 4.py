@@ -20,7 +20,7 @@ def originalPerceptron(w0,x0,origin,eta):
         mark=n
         for i in range(0,n):
             if x0[i].dot(w)*origin[i]<=0:
-                w=w+eta*origin[i]*(x[0].T)
+                w += eta*origin[i]*(x0[i,:].T)
             else:
                 mark=mark-1
 
@@ -69,7 +69,7 @@ def dualPerceptron(x0,origin,eta):
 x=np.array([[3, 3, 1], [4, 3, 1], [1, 1, 1]])
 t0=np.array([1,1,0])
 [m,n]=x.shape
-w0=np.array([1,10,0])
+w0=np.array([1,10,1])
 w0=w0.T
 wOriginal=originalPerceptron(w0, x, t0, 1)
 wDual=dualPerceptron(x, t0, 1)
@@ -86,13 +86,16 @@ for i in range(0,m):
         x02[q][0]=x[i][0]
         x02[q][2]=x[i][1]
         q=q+1
-
-maxi=max(x[:0])
-mini=min(x[:0])
-x1=np.arange(mini-2,maxi+2+1,step=1)
+maxi=np.amax(x[:,0])
+mini=np.amin(x[:,0])
+x1=np.arange(mini-2,maxi+2+1,step=0.01)
 x2d=-(wOriginal[0][0]*x1+wOriginal[0][2])/wOriginal[0][1]
 x2o=-(wDual[0][0]*x1+wDual[0][2])/wDual[0][1]
-plt.plot(x1,x2o,)
+plt.plot(x01[:,0],x01[:,1],'o')
+plt.plot(x02[:,0],x02[:,1],'*')
+plt.plot(x1,x2o)
+plt.plot(x1,x2d)
+plt.show()
 
 
 
